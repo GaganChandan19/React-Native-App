@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
+import axios from "axios";
 
 const Weather = ({ navigation, route }: any) => {
   const { capital } = route.params;
@@ -19,11 +20,8 @@ const Weather = ({ navigation, route }: any) => {
     });
 
   useEffect(() => {
-    fetch(
-      `http://api.weatherstack.com/current?access_key=68f83f417142a947f0a6b9f6f1f427d8&query=${capital}`
-    )
-      .then((res) => res.json())
-      .then((res) => setdata(res.current))
+    axios.get(`http://api.weatherstack.com/current?access_key=68f83f417142a947f0a6b9f6f1f427d8&query=${capital}`)
+      .then((res) => setdata(res.data.current))
       .catch((err) => console.log(err));
   }, [capital]);
 
